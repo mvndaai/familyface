@@ -11,4 +11,4 @@ In a different terminal load people into memory, since there is currently no dat
 
     ./populate.sh
 
-Then just go to the page: http://localhost:9090/facebook
+Then just go to the page: <http://localhost:9090/face>
