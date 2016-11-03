@@ -1,0 +1,316 @@
+<html>
+
+<head>
+
+  <style>
+
+    .flex-container-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-content: center;
+      align-items: stretch;
+    }
+
+    .flex-container-column {
+      display: flex;
+      flex-direction: column;;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-content: center;
+      align-items: stretch;
+    }
+
+    .flex-item-default {
+      width: 300px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 0;
+    }
+
+    .flex-grow {
+      flex-grow: 1;
+    }
+
+    .pic-big{
+      width: 200px;
+      height: 200px;
+    }
+    .pic {
+      width: 100px;
+      height: 100px;
+      background-color: black;
+    }
+
+    .view {
+      display:none;
+    }
+
+
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+  <script>
+  var params = {};
+  if (location.search) {
+    var parts = location.search.substring(1).split('&');
+    for (var i = 0; i < parts.length; i++) {
+      var nv = parts[i].split('=');
+      if (!nv[0]) continue;
+      params[nv[0]] = nv[1] || true;
+    }
+  }
+  //console.log(params);
+
+  var view = (typeof params.view == "undefined") ? "tree" : params.view;
+  function goToView(name){
+    $(".view").hide();
+    $("#view-" + name).show();
+  }
+  </script>
+
+
+  <script> //Birthdays
+  function getBirthdayList() {
+    $.getJSON("/people/get").done(function(data) {
+      if (data == null) return;
+      var people = removeBirthdayless(data).sort(birthdaySort);
+      var htmlArray = []
+      people.forEach(function(p){ htmlArray.push(birthdayLine(p)); });
+      $("#birthdayList").html(htmlArray.join("<br>"));
+    });
+  }
+  getBirthdayList();
+
+  function removeBirthdayless(people){
+    var r = [];
+    people.forEach(function(p){
+      console.log( );
+      if (typeof p.details.birthday !== "undefined") r.push(p);
+    });
+    return r;
+  }
+
+  function birthdaySort(a,b){
+    var x = a.details.birthday; var y = b.details.birthday;
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  }
+
+  function birthdayLine(person){
+    return person.details.birthday + " | " + personHTML(person);
+  }
+  </script>
+
+  <script> //NavBar
+  $("button").click(function(){
+    console.log("Clicked a button");
+  });
+
+
+  function search(term) {
+    $.getJSON("/people/search", {"term":term}).done(function(data) {
+      if (data == null) return;
+      var str = data.length + " found<br>";
+      data.forEach(function(p){ str += personHTML(p) + "<br>"});
+      $("#searchResults").html(str);
+    });
+  }
+  </script>
+
+  <script> //Person
+    var person, mom, dad, currentSpouse;
+    var children = [];
+
+    function cleanUpScreen() {
+      $("#person").html("");
+      $("#spouse").html("");
+      $("#mom").html("");
+      $("#dad").html("");
+      $("#children").html("");
+      $("#details").html("")
+    }
+
+    function getPerson(id) {
+      $.getJSON("/person/get", {
+        "person_id": id
+      }).done(function(person) {
+        console.log("person", person);
+        $("#person").html(personHTML(person,true));
+        $("#details").html(JSON.stringify(person.details).replace(/,/g , "<br>").replace(/({|})/g , ""));
+        getDad(person.dad_id);
+        getMom(person.mom_id);
+        if (person.marriages) {
+          getSpouse(person.marriages[person.marriages.length - 1].spouse_id);
+        }
+        getChildren(person.children_ids)
+      })
+    }
+
+    function personHTML(person, pic) {
+      var str = "";
+      if (pic) {
+        if (typeof person.details.fbid !== "undefined") {
+          str += '<iframe class="pic" src="https://graph.facebook.com/' + person.details.fbid +'/picture?type=normal"></iframe><br>';
+        } else {
+          str += '<div class="pic"></div>';
+        }
+      }
+      str += '<a href="face?person_id=' + person.id + '">' +
+        person.details.givennames + " " + person.details.surname + '</a>'
+      return str;
+
+    }
+
+    function getChildren(children_ids) {
+      for (child_id in children_ids) {
+        getChild(children_ids[child_id]);
+      }
+    }
+
+    function childrenHtml() {
+      var links = [];
+      for (child in children) {
+        links.push(personHTML(children[child],true))
+      }
+      $("#children").html(links.join("<br>"))
+    }
+
+    function getChild(id) {
+      $.getJSON("/person/get", {
+        "person_id": id
+      }).done(function(data) {
+        if (data == null) return;
+        children.push(data);
+        childrenHtml();
+      });
+    }
+
+    function getSpouse(id) {
+      $.getJSON("/person/get", {
+        "person_id": id
+      }).done(function(spouse) {
+        if (spouse == null) return;
+        $("#spouse").html(personHTML(spouse,true));
+      });
+    }
+
+    function getDad(id) {
+      $.getJSON("/person/get", {
+        "person_id": id
+      }).done(function(dad) {
+        if (dad == null) return;
+        $("#dad").html(personHTML(dad,true));
+      });
+    }
+
+    function getMom(id) {
+      $.getJSON("/person/get", {
+        "person_id": id
+      }).done(function(mom) {
+        if (mom == null) return;
+        $("#mom").html(personHTML(mom,true));
+      });
+    }
+
+    if (typeof params.person_id == "undefined") {
+      getPerson(1);
+    } else {
+      getPerson(params.person_id);
+    }
+  </script>
+</head>
+
+<body class="flex-container-column">
+  <!--Header--><div id="header" class="flex-container-row">
+  <div class="flex-grow">
+    <button class="btn-nav">Home</button>
+    <button class="btn-nav">Tree</button>
+    <button class="btn-nav">Reports</button>
+    <button class="btn-nav">Game</button>
+  </div>
+  <div>
+    <input id="search-term"></input>
+    <button id="btn-search">Search</button>
+  </div>
+
+  </div><!--Header-->
+  <!--View-Home--><div id="view-home" class="flex-grow view">
+    Sorry nothing new...<br>Your family must be boring.
+  </div><!--View-Home-->
+
+  <!--View-Tree--><div id="view-tree" class="flex-grow view">
+    <div class="flex-container-row">
+      <div class="flex-grow">
+        <!--Generations--><div class="flex-container-column">
+          <!--Parents--><div class="flex-container-row">
+            <div id="mom" class="flex-grow" style="background-color:khaki;">Unknown mom</div>
+            <div id="dad" class="flex-grow" style="background-color:pink;">Unknown dad</div>
+          </div><!--Parents-->
+          <!--Person--><div style="background-color:lightblue;">
+          <div id="person">person</div>
+          <div id="spouse">No known spouse</div>
+          </div><!--Person-->
+          <!--Children--><div style="background-color:plum;">
+            <div id="children">No known children</div>
+          </div><!--Children-->
+        </div><!--Generations-->
+      </div>
+      <!--Details--><div>
+        details
+        <div id="details"></div>
+      </div><!--Details-->
+    </div>
+  </div><!--View-Tree-->
+
+  <!--View-Report--><div id="view-reports" class="flex-grow view" style="background-color:lightgray;">
+    <div class="flex-container-row">
+      <div class=flex-grow>
+        BirthdayList
+        <div id="birthdayList">no birthdays</div>
+      </div>
+      <div id="report-birthday" class="flex-grow" style="display:none;">
+        Search
+        <div id="searchResults"></div>
+      </div>
+    </div>
+  </div><!--View-Report-->
+
+  <!--View-Game--><div id="view-game" class="flex-grow view" style="background-color:lightgray;">
+    <div class="flex-container-row">
+      <div class=flex-grow>
+        <div id="gamePic">Picture here</div>
+        <!--
+          To get a facebook picture
+          http://stackoverflow.com/questions/11442442/get-user-profile-picture-by-id
+          <iframe class="pic-big" src="https://graph.facebook.com/{facebookID}/picture?type=large"></iframe>
+        -->
+      </div>
+      <div class="flex-grow">
+        <div id="gameOptions">Options here</div>
+      </div>
+    </div>
+  </div><!--View-Game-->
+
+</body>
+
+<script>
+  goToView(view);
+  $("#btn-search").click(function(){
+    search($("#search-term").val());
+  });
+  $("#search-term").keypress(function (e) {
+    if (e.which == 13) {
+      $("#report-birthday").show();
+      search($("#search-term").val());
+      goToView("reports");
+    }
+  });
+
+  $(".btn-nav").click(function(){
+    goToView($(this).text().toLowerCase());
+  });
+</script>
+
+</html>
