@@ -217,7 +217,9 @@ function search(term) {
     if (pic) {
       if (typeof person.details.fbid !== "undefined") {
         str += '<iframe class="pic" src="https://graph.facebook.com/' + person.details.fbid +'/picture?type=normal"></iframe><br>';
-      } else {
+      } else if (typeof person.details.pic !== "undefined")
+        str += '<image class="pic" src="/pic?path=' + person.details.pic +'"></image><br>';
+      else {
         str += '<div class="pic"></div>';
       }
     }
@@ -292,7 +294,8 @@ function search(term) {
     $.getJSON("/people/get").done(function(data) {
       if (data == null) return;
       data.forEach(function(p){
-        if (typeof p.details.fbid !== "undefined") gamePeople.push(p);
+        if ((typeof p.details.fbid !== "undefined") ||
+          (typeof p.details.pic !== "undefined")) gamePeople.push(p);
       });
       gameNext();
     });
@@ -326,11 +329,13 @@ function search(term) {
     }
     gameCurrentAnswers.sort(function(){return .5 - Math.random();});
 
-    $("#gamePic").html(
-      '<iframe class="pic-big" src="https://graph.facebook.com/' +
+    if (typeof gamePeople[gameCurrentPersonIndex].details.fbid !== "undefined"){
+      $("#gamePic").html('<iframe class="pic-big" src="https://graph.facebook.com/' +
       gamePeople[gameCurrentPersonIndex].details.fbid +
-      '/picture?type=large"></iframe>'
-    );
+      '/picture?type=large"></iframe>');
+    }else {
+      $("#gamePic").html('<image class="pic-big" src="/pic?path=' + gamePeople[gameCurrentPersonIndex].details.pic +'"></image><br>');
+    }
 
     var options = "";
     gameCurrentAnswers.forEach(function(i){

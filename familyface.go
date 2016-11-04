@@ -31,6 +31,7 @@ func main() {
 	http.HandleFunc("/face", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "index.html")
 	})
+	http.HandleFunc("/pic", displayPic)
 	http.HandleFunc("/dump", dumpPeople)
 	http.HandleFunc("/people/get", getPeopleJSON)
 	http.HandleFunc("/people/search", searchPeopleJSON)
@@ -58,6 +59,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func status(w http.ResponseWriter, r *http.Request) {
 	str := fmt.Sprintf("People: %v", len(people))
 	w.Write([]byte(str))
+}
+
+func displayPic(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Query()["path"][0]
+	http.ServeFile(w, r, "pic/"+path)
 }
 
 func nextID() int {
