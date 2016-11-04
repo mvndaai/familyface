@@ -374,9 +374,10 @@ function search(term) {
 
   function checkAnswer(id){
     if (gamePeople[gameCurrentPersonIndex].id === id){
-        $("#gameStatus").html("Great Job! it was " +
+        $("#gameStatus").html('Great Job! it was <a href="face?person_id=' +
+          gamePeople[gameCurrentPersonIndex].id +'">' +
           gamePeople[gameCurrentPersonIndex].details.givennames + " " +
-          gamePeople[gameCurrentPersonIndex].details.surname + "!"
+          gamePeople[gameCurrentPersonIndex].details.surname + "</a>!"
         );
         gameNext();
     }else{
