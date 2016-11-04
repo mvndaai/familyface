@@ -146,6 +146,7 @@ var view = (typeof params.view == "undefined") ? "tree" : params.view;
 function goToView(name){
   $(".view").hide();
   $("#view-" + name).show();
+  updateViewURLParam(name);
 }
 
 function updateViewURLParam(view){
@@ -402,10 +403,7 @@ function search(term) {
   $(".btn-nav").click(function(){
     var view = $(this).text().toLowerCase();
     goToView(view);
-    updateViewURLParam(view);
   });
-
-
 
 </script>
 
