@@ -50,6 +50,12 @@
     #gameStatus{
       text-align: center;
     }
+
+    #title{
+      font-weight: bold;
+      color: mediumpurple;
+    }
+
   </style>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -58,6 +64,7 @@
 <body class="flex-container-column">
   <!--Header--><div id="header" class="flex-container-row">
   <div class="flex-grow">
+    <span id="title">familyface</span>
     <button class="btn-nav">Home</button>
     <button class="btn-nav">Tree</button>
     <button class="btn-nav">Reports</button>
@@ -140,6 +147,23 @@ function goToView(name){
   $(".view").hide();
   $("#view-" + name).show();
 }
+
+function updateViewURLParam(view){
+  var url = ""; var params = window.location.search;
+  if (params.length === 0){
+    url = window.location.pathname + "?view=" + view
+  }else if (!params.includes("view")){
+    url = window.location.pathname + params + "&view=" + view
+  }else{
+    params = params.substr(1).split("&");
+    for (var i = 0; i < params.length; i++){
+      if (params[i].startsWith("view")){ params[i] = "view=" + view; break; }
+    }
+    url = "?" + params.join("&");
+  }
+  window.history.pushState({},"",url);
+}
+
 </script>
 
 <script> //Birthdays
@@ -376,8 +400,13 @@ function search(term) {
   });
 
   $(".btn-nav").click(function(){
-    goToView($(this).text().toLowerCase());
+    var view = $(this).text().toLowerCase();
+    goToView(view);
+    updateViewURLParam(view);
   });
+
+
+
 </script>
 
 </html>
