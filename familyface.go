@@ -146,6 +146,7 @@ func searchPeopleJSON(w http.ResponseWriter, r *http.Request) {
 			for _, v := range p.Details {
 				if strings.Contains(strings.ToLower(v), term) {
 					hasTerm = append(hasTerm, p)
+					break
 				}
 			}
 		}
