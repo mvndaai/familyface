@@ -213,7 +213,7 @@ function search(term) {
   }
 
   function personHTML(person, pic) {
-    var str = "";
+    var str = '<a href="face?person_id=' + person.id + '">';
     if (pic) {
       if (typeof person.details.fbid !== "undefined") {
         str += '<iframe class="pic" src="https://graph.facebook.com/' + person.details.fbid +'/picture?type=normal"></iframe><br>';
@@ -221,8 +221,7 @@ function search(term) {
         str += '<div class="pic"></div>';
       }
     }
-    str += '<a href="face?person_id=' + person.id + '">' +
-      person.details.givennames + " " + person.details.surname + '</a>'
+    str += person.details.givennames + " " + person.details.surname + '</a>'
     return str;
 
   }
