@@ -20,6 +20,15 @@
         padding-left: 10%;
       }
 
+      #recentEdit {
+        padding-left: 10%;
+        padding-top: 10%;
+      }
+
+      .leadEdit {
+        padding-left: 19%;
+      }
+
       #famTree {
         padding-left: 5%;
         margin-bottom: 15px;
@@ -53,7 +62,7 @@
         margin-right: -30px;
         margin-top: -83px;
         height: 300px;
-        padding-bottom: 750px;
+        padding-bottom: 850px;
         border-left: 1px solid #333;
         background-color: #fafafa;
 
@@ -196,6 +205,9 @@
         transform: translate(-50%, -50%);
       }
 
+      #submitEdit {
+        margin-top: 20%;
+      }
 
     </style>
     <meta charset="utf-8">
@@ -281,9 +293,9 @@
       <div class="container">
         <div>
           <div class="col-md-2"></div>
-          <div id="recentAct" class="col-md-8">
+          <div id="recentEdit" class="col-md-8">
             <h1>Thank You For You Submission</h1>
-            <p class="lead">Our Admin Will Review The Request.</p>
+            <h4 class="leadEdit">Our Admin Will Review Your Request.</h4>
           </div>
           <div class="col-md-2"></div>
         </div>
@@ -756,7 +768,7 @@ function search(term) {
   });
 
   $("#titleName").click(function(){
-    goToView("login");
+    goToView("home");
   });
 
 </script>
