@@ -1,135 +1,422 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        padding-top: 50px;
+        height: 870px;
+      }
+      .starter-template {
+        padding: 40px 15px;
+        text-align: center;
+      }
 
-<head>
-  <title>familyface</title>
-  <style>
+      .searchNav {
+        padding-left: 75%;
+        padding-top: 10px;
+      }
 
-    .flex-container-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-content: center;
-      align-items: stretch;
-    }
+      #recentAct {
+        padding-left: 10%;
+      }
 
-    .flex-container-column {
-      display: flex;
-      flex-direction: column;;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-content: center;
-      align-items: stretch;
-    }
+      #famTree {
+        padding-left: 5%;
+        margin-bottom: 15px;
+      }
 
-    .flex-item-default {
-      width: 300px;
-      flex-grow: 0;
-      flex-shrink: 0;
-      flex-basis: 0;
-    }
+      .pic-big{
+        width: 200px;
+        height: 200px;
+      }
+      .pic {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
 
-    .flex-grow {
-      flex-grow: 1;
-    }
+      #dad,#mom {
+        padding-bottom: 55px;
+        padding-top: 25px;
+      }
 
-    .pic-big{
-      width: 200px;
-      height: 200px;
-    }
-    .pic {
-      width: 100px;
-      height: 100px;
-      background-color: black;
-    }
+      #detailP {
+        padding-top: 50px;
+      }
 
-    .view {
-      display:none;
-    }
+      #extra {
+        height: 200px;
+      }
 
-    #gameStatus{
-      text-align: center;
-    }
+      .dStyle {
+        /*margin-left: 78%;*/
+        margin-right: -30px;
+        margin-top: -83px;
+        height: 300px;
+        padding-bottom: 750px;
+        border-left: 1px solid #333;
+        background-color: #fafafa;
 
-    #title{
-      font-weight: bold;
-      color: mediumpurple;
-    }
+      }
 
-  </style>
+      #details {
+        padding-top: 10%;
+        padding-left: 60px;
+      }
 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-</head>
+      #details hr {
+        padding-top: 10%;
+        margin-left: -60px;
+      }
 
-<body class="flex-container-column">
-  <!--Header--><div id="header" class="flex-container-row">
-  <div class="flex-grow">
-    <span id="title">familyface</span>
-    <button class="btn-nav">Home</button>
-    <button class="btn-nav">Tree</button>
-    <button class="btn-nav">Reports</button>
-    <button id="header-btn-game" class="btn-nav">Game</button>
-  </div>
-  <div>
-    <input id="search-term"></input>
-    <button id="btn-search">Search</button>
-  </div>
+      #buttonDetail {
+        margin-left: 35%;
+        margin-top: 70px;
+      }
 
-  </div><!--Header-->
-  <!--View-Home--><div id="view-home" class="flex-grow view">
-    Sorry nothing new...<br>Your family must be boring.
-  </div><!--View-Home-->
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #080808;
+      }
 
-  <!--View-Tree--><div id="view-tree" class="flex-grow view">
-    <div class="flex-container-row">
-      <div class="flex-grow">
-        <!--Generations--><div class="flex-container-column">
-          <!--Parents--><div class="flex-container-row">
-            <div id="mom" class="flex-grow" style="background-color:khaki;">Unknown mom</div>
-            <div id="dad" class="flex-grow" style="background-color:pink;">Unknown dad</div>
-          </div><!--Parents-->
-          <!--Person--><div style="background-color:lightblue;">
-          <div id="person">person</div>
-          <div id="spouse">No known spouse</div>
-          </div><!--Person-->
-          <!--Children--><div style="background-color:plum;">
-            <div id="children">No known children</div>
-          </div><!--Children-->
-        </div><!--Generations-->
+      #footerDesc {
+        margin-top: 18px;
+        margin-left: 46%;
+        font-size: 20px;
+        color: #ffffff;
+        font-weight: 150;
+      }
+
+
+
+      .reportsRow {
+        height: 300px;
+        padding-top: 3%;
+        padding-bottom: 750px;
+        padding-left: 30px;
+        background-color: #fafafa;
+        border-right: 1px solid #333;
+        margin-left: -30px;
+      }
+
+      .reportsRow hr {
+        margin-left: -60px;
+        padding-bottom: 10%;
+
+      }
+
+      .reportResults h3 {
+        margin-left: 40%;
+        margin-top: 5%;
+
+      }
+
+      #searchResults {
+        margin-left: 45%;
+        margin-top: 5%;
+      }
+
+      #searchResults {
+        height: 100px;
+      }
+
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #eee;
+      }
+
+      .form-signin {
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin .checkbox {
+        font-weight: normal;
+      }
+      .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+      }
+      .form-signin .form-control:focus {
+        z-index: 2;
+      }
+      .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      .gameView {
+        position: fixed;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .gameView1 {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .gameView2 {
+        position: fixed;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .gameView3 {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .gameView4 {
+        position: fixed;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+    <!-- <link href="dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a id="titleName" class="navbar-brand" href="#">Family Face</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="btn-nav">Home</a></li>
+            <li><a class="btn-nav">Tree</a></li>
+            <li><a class="btn-nav">Reports</a></li>
+            <li><a id="header-btn-game" class="btn-nav">Game</a></li>
+          </ul>
+          <div class="searchNav">
+            <input id="search-term"></input>
+            <button id="btn-search">Search</button>
+          </div>
+        </div><!--/.nav-collapse -->
       </div>
-      <!--Details--><div>
-        details
-        <div id="details"></div>
-      </div><!--Details-->
+    </nav>
+
+    <div id="view-login" class="view">
+      <div class="container">
+
+        <form class="form-signin">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button id="signIn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+
+      </div>
     </div>
-  </div><!--View-Tree-->
 
-  <!--View-Report--><div id="view-reports" class="flex-grow view" style="background-color:lightgray;">
-    <div class="flex-container-row">
-      <div class=flex-grow>
-        BirthdayList
-        <div id="birthdayList">no birthdays</div>
-      </div>
-      <div id="report-birthday" class="flex-grow" style="display:none;">
-        Search
-        <div id="searchResults"></div>
+    <div id="view-Edit" class="view">
+      <div class="container">
+
+        <form class="form-signin">
+          <h2 class="form-signin-heading">Edit Details</h2>
+          <label for="inputEmail" class="sr-only">Enter Job Title</label>
+          <input type="input" id="inputEmail" class="form-control" placeholder="Job Title" required autofocus>
+          <label for="inputPassword" class="sr-only">Enter Birthdate</label>
+          <input type="date" id="inputPassword" class="form-control" required>
+          <button id="submitEdit" class="btn btn-lg btn-primary btn-block" type="submit">Submit Changes</button>
+        </form>
+
       </div>
     </div>
-  </div><!--View-Report-->
 
-  <!--View-Game--><div id="view-game" class="flex-grow view" style="background-color:lightgray;">
-    <div id="gameStatus"><br></div>
-    <div class="flex-container-row">
-      <div class=flex-grow>
-        <div id="gamePic">Picture here</div>
+    <div id="view-admin" class="view">
+      <div class="container">
+        <div>
+          <div class="col-md-2"></div>
+          <div id="recentAct" class="col-md-8">
+            <h1>Thank You For You Submission</h1>
+            <p class="lead">Our Admin Will Review The Request.</p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
       </div>
-      <div class="flex-grow">
-        <div id="gameOptions">Options here</div>
-      </div>
+
+
     </div>
-  </div><!--View-Game-->
 
+
+    <div id="view-home" class="view">
+      <div class="container">
+        <div>
+          <div class="col-md-3"></div>
+          <div id="recentAct" class="col-md-6">
+            <h1>Recent Activities</h1>
+            <p class="lead">Most recent activities of your family.</p>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+      </div> <!-- /container -->
+      <hr>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5"></div>
+          <div id="report-birthday" class="col-md-3">
+            <p>Sorry nothing new...<br>Your family must be boring.</p>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div> <!-- /container -->
+    </div>
+
+      <!--View-Tree-->
+      <div id="view-tree" class="view">
+        <div>
+          <div class="col-md-3"></div>
+          <div id="famTree" class="col-md-6">
+            <h1>Family Tree</h1>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="col-md-9">
+                <!--Parents-->
+                  <div class="col-md-3"></div>
+                  <div id="mom" class="col-md-4">Unknown mom</div>
+                  <div id="dad" class="col-md-2">Unknown dad</div>
+                  <div class="col-md-3"></div>
+                <!--Parents-->
+                <!--Person-->
+                <div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-2" id="person">person</div>
+                  <div class="col-md-3" id="spouse">No known spouse</div>
+                  <div id="extra" class="col-md-3"></div>
+                </div><!--Person-->
+                <!--Children-->
+                <div>
+
+                  <div id="children">No known children</div>
+
+                </div><!--Children-->
+            </div>
+            <!--Details-->
+            <div class="col-md-3">
+              <div class="dStyle">
+                <div id="details"></div>
+                <button id="buttonDetail"type="button" class="btn btn-primary">Edit Details</button>
+              </div>
+
+            </div>
+            <!--Details-->
+            </div>
+          </div>
+        </div>
+
+
+        <div id="view-reports" class="view">
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <div class="col-md-3">
+                <div class="reportsRow">
+                    <h3>Birthday List</h3>
+                    <hr>
+                    <div id="birthdayList">no birthdays</div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="reportResults">
+                  <div id="report-birthday">
+                    <h3>Search Results</h3>
+                    <div id="searchResults"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!--View-Report-->
+
+        <div id="view-game" class="view">
+            <div class="flex-container-row" id="gameStyle1">
+              <div class="gameView1">
+                <div id="gamePic">Picture here</div>
+              </div>
+              <div class="gameView2">
+                <div id="gameOptions">Options here</div>
+              </div>
+            </div>
+            <div id="gameStyle2">
+              <div class="gameView3">
+                <div id="gameName">name here</div>
+              </div>
+              <div class="gameView4">
+                <div id="gamePicOptions">Pictures here</div>
+              </div>
+            </div>
+            <div class="gameView">
+              <div id="gameStatus"><br></div>
+            </div>
+        </div><!--View-Game-->
+
+    <div class="footer navbar-fixed-bottom">
+      <p id="footerDesc">Family Face</p>
+    </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- <script src="dist/js/bootstrap.min.js"></script> -->
+
 
 <script>
 var params = {};
@@ -142,7 +429,7 @@ if (location.search) {
   }
 }
 
-var view = (typeof params.view == "undefined") ? "tree" : params.view;
+var view = (typeof params.view == "undefined") ? "login" : params.view;
 function goToView(name){
   $(".view").hide();
   $("#view-" + name).show();
@@ -227,18 +514,30 @@ function search(term) {
     }).done(function(person) {
       console.log("person", person);
       $("#person").html(personHTML(person,true));
-      $("#details").html(JSON.stringify(person.details).replace(/,/g , "<br>").replace(/({|})/g , ""));
+      $("#details").html('<h4>Details for ' + person.details.givennames  + " " + person.details.surname +
+        '</h4><hr><p>Birthday: ' + person.details.birthday +
+        '<p>Occupation: ' + person.details.occupation);
       getDad(person.dad_id);
       getMom(person.mom_id);
       if (person.marriages) {
         getSpouse(person.marriages[person.marriages.length - 1].spouse_id);
       }
-      getChildren(person.children_ids)
+      else {
+        $("#spouse").html('<image class="pic" src="/pic/female.png"></image>');
+      }
+      if(person.children_ids)
+      {
+        getChildren(person.children_ids);
+      }
+      else {
+        childrenHtml();
+      }
+
     })
   }
 
   function personHTML(person, pic) {
-    var str = '<a href="face?person_id=' + person.id + '">';
+    var str = '<a href="face?view=tree&person_id=' + person.id + '">';
     if (pic) {
       if (typeof person.details.fbid !== "undefined") {
         str += '<iframe class="pic" src="https://graph.facebook.com/' + person.details.fbid +'/picture?type=normal"></iframe><br>';
@@ -261,10 +560,36 @@ function search(term) {
 
   function childrenHtml() {
     var links = [];
+    var length = children.length;
+
     for (child in children) {
       links.push(personHTML(children[child],true))
     }
-    $("#children").html(links.join("<br>"))
+    var str = "";
+    if(length == 0)
+    {
+      str = "<div class='col-md-4'></div>"
+      + "<div class='col-md-4'><image class='pic' src='/pic/female.png'></image></div><div class='col-md-4'>"
+      + "</div>";
+      $("#children").html(str);
+
+    }
+    if(length == 1)
+    {
+      str = "<div class='col-md-4'></div><div class='col-md-4'>" + links.join() + "</div>" + "<div class='col-md-4'></div>";
+      $("#children").html(str);
+    }
+    else if(length == 2)
+    {
+      str = "<div class='col-md-3'></div><div class='col-md-4'>" + links.join("</div><div class='col-md-4'>") + "</div>";
+      $("#children").html(str);
+    }
+    else if(length == 3)
+    {
+      str = "<div class='col-md-2'></div><div class='col-md-3'>" + links.join("</div><div class='col-md-3'>") + "</div>";
+      $("#children").html(str);
+    }
+
   }
 
   function getChild(id) {
@@ -281,7 +606,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(spouse) {
-      if (spouse == null) return;
+      if (spouse == null) {$("#spouse").html('<image class="pic" src="/pic/female.png"></image>');};
       $("#spouse").html(personHTML(spouse,true));
     });
   }
@@ -290,7 +615,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(dad) {
-      if (dad == null) return;
+      if (dad == null) {$("#dad").html('<image class="pic" src="pic/male.jpg"></image>');};
       $("#dad").html(personHTML(dad,true));
     });
   }
@@ -299,7 +624,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(mom) {
-      if (mom == null) return;
+      if (mom == null) {$("#mom").html('<image class="pic" src="pic/female.png"></image>');}
       $("#mom").html(personHTML(mom,true));
     });
   }
@@ -361,20 +686,32 @@ function search(term) {
     }else {
       $("#gamePic").html('<image class="pic-big" src="/pic?path=' + gamePeople[gameCurrentPersonIndex].details.pic +'"></image><br>');
     }
+    $("#gameName").html("<div><h3>" +
+      gamePeople[gameCurrentPersonIndex].details.givennames + ' ' +
+      gamePeople[gameCurrentPersonIndex].details.surname + "</h3></div>");
 
-    var options = "";
+    var options = "", pics = "";
     gameCurrentAnswers.forEach(function(i){
-      options += '<button class="gameChoices" onclick="checkAnswer(' +
+      pics += '<image style="margin: 0px 20px" class="pic" onclick="checkAnswer(' +
+        gamePeople[i].id + ')" src="/pic?path=' + gamePeople[i].details.pic +'"></image>'
+
+      options += '<button style="margin: 0px 20px" class="gameChoices btn btn-primary" onclick="checkAnswer(' +
         gamePeople[i].id + ')">' +
         gamePeople[i].details.givennames + ' ' +
-        gamePeople[i].details.surname + '</button><br>';
+        gamePeople[i].details.surname + '</button>';
     });
     $("#gameOptions").html(options);
+    $("#gamePicOptions").html(pics);
+
+    $("#gameStyle1").hide();
+    $("#gameStyle2").hide();
+    (Math.random() >= 0.5) ? $("#gameStyle1").show() : $("#gameStyle2").show();
+
   }
 
   function checkAnswer(id){
     if (gamePeople[gameCurrentPersonIndex].id === id){
-        $("#gameStatus").html('Great Job! it was <a href="face?person_id=' +
+        $("#gameStatus").html('Great Job! it was <a href="face?view=tree&person_id=' +
           gamePeople[gameCurrentPersonIndex].id +'">' +
           gamePeople[gameCurrentPersonIndex].details.givennames + " " +
           gamePeople[gameCurrentPersonIndex].details.surname + "</a>!"
@@ -404,6 +741,22 @@ function search(term) {
   $(".btn-nav").click(function(){
     var view = $(this).text().toLowerCase();
     goToView(view);
+  });
+
+  $("#signIn").click(function(){
+    goToView("home");
+  });
+
+  $("#buttonDetail").click(function(){
+    goToView("Edit");
+  });
+
+  $("#submitEdit").click(function(){
+    goToView("admin");
+  });
+
+  $("#titleName").click(function(){
+    goToView("login");
   });
 
 </script>
