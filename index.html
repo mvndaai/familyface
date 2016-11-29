@@ -209,6 +209,14 @@
         margin-top: 20%;
       }
 
+      #facebookPic {
+
+      }
+
+      #facebookPic img {
+        margin-top: -46px;
+      }
+
     </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -704,8 +712,15 @@ function search(term) {
 
     var options = "", pics = "";
     gameCurrentAnswers.forEach(function(i){
+      if (typeof gamePeople[i].details.fbid !== "undefined"){
+        pics += '<iframe id="facebookPic" style="position:relative; top:47px; margin-left:12px; margin-right:12px;" onclick="checkAnswer(' +
+          gamePeople[i].id + ')" class="pic" src="https://graph.facebook.com/' +
+        gamePeople[i].details.fbid +
+        '/picture?type=normal"></iframe>'
+      }else{
       pics += '<image style="margin: 0px 20px" class="pic" onclick="checkAnswer(' +
         gamePeople[i].id + ')" src="/pic?path=' + gamePeople[i].details.pic +'"></image>'
+      }
 
       options += '<button style="margin: 0px 20px" class="gameChoices btn btn-primary" onclick="checkAnswer(' +
         gamePeople[i].id + ')">' +
