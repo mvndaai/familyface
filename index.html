@@ -543,7 +543,7 @@ function search(term) {
         getSpouse(person.marriages[person.marriages.length - 1].spouse_id);
       }
       else {
-        $("#spouse").html('<image class="pic" src="/pic/female.png"></image>');
+        $("#spouse").html('<image class="pic" src="/pic?path=female.png"></image>');
       }
       if(person.children_ids)
       {
@@ -589,7 +589,7 @@ function search(term) {
     if(length == 0)
     {
       str = "<div class='col-md-4'></div>"
-      + "<div class='col-md-4'><image class='pic' src='/pic/female.png'></image></div><div class='col-md-4'>"
+      + "<div class='col-md-4'><image class='pic' src='/pic?path=female.png'></image></div><div class='col-md-4'>"
       + "</div>";
       $("#children").html(str);
 
@@ -640,7 +640,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(spouse) {
-      if (spouse == null) {$("#spouse").html('<image class="pic" src="/pic/female.png"></image>');};
+      if (spouse == null) {$("#spouse").html('<image class="pic" src="/pic?path=female.png"></image>');};
       $("#spouse").html(personHTML(spouse,true));
     });
   }
@@ -649,7 +649,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(dad) {
-      if (dad == null) {$("#dad").html('<image class="pic" src="pic/male.jpg"></image>');};
+      if (dad == null) {$("#dad").html('<image class="pic" src="/pic?path=male.jpg"></image>');};
       $("#dad").html(personHTML(dad,true));
     });
   }
@@ -658,7 +658,7 @@ function search(term) {
     $.getJSON("/person/get", {
       "person_id": id
     }).done(function(mom) {
-      if (mom == null) {$("#mom").html('<image class="pic" src="pic/female.png"></image>');}
+      if (mom == null) {$("#mom").html('<image class="pic" src="pic?path=female.png"></image>');}
       $("#mom").html(personHTML(mom,true));
     });
   }
@@ -727,15 +727,14 @@ function search(term) {
     var options = "", pics = "";
     gameCurrentAnswers.forEach(function(i){
       if (typeof gamePeople[i].details.fbid !== "undefined"){
-        pics += '<span onclick="checkAnswer(' + gamePeople[i].id + ')">';
-        pics += '<iframe id="facebookPic" class="pic" '+
-        'style="pointer-events: none; position:relative; top:47px; margin-left:12px; margin-right:12px;" '+
+        pics += '<button onclick="checkAnswer(' + gamePeople[i].id + ')" style="width:100px; display: block; float: left; margin-right: 20px;">';
+        pics += '<iframe id="facebookPic" class="pic" style="pointer-events: none;" '+
         ' src="https://graph.facebook.com/' + gamePeople[i].details.fbid + '/picture?type=normal"></iframe>';
-        pics += '</span>';
+        pics += '</button>';
 
       }else{
-      pics += '<image style="margin: 0px 20px" class="pic" onclick="checkAnswer(' +
-        gamePeople[i].id + ')" src="/pic?path=' + gamePeople[i].details.pic +'"></image>'
+      pics += '<button onclick="checkAnswer(' + gamePeople[i].id + ')" style="width: 100px; margin-right: 20px;">' +
+        '<image class="pic"  src="/pic?path=' + gamePeople[i].details.pic +'"></image></button>'
       }
 
       options += '<button style="margin: 0px 20px" class="gameChoices btn btn-primary" onclick="checkAnswer(' +
