@@ -609,7 +609,21 @@ function search(term) {
       str = "<div class='col-md-2'></div><div class='col-md-3'>" + links.join("</div><div class='col-md-3'>") + "</div>";
       $("#children").html(str);
     }
-
+    else if(length == 4)
+    {
+      str = "<div class='col-md-2'></div><div class='col-md-2'>" + links.join("</div><div class='col-md-2'>") + "</div>";
+      $("#children").html(str);
+    }
+    else if(length == 5)
+    {
+      str = "<div class='col-md-1'></div><div class='col-md-1'>" + links.join("</div><div class='col-md-2'>") + "</div>";
+      $("#children").html(str);
+    }
+    // else if(length == 6)
+    // {
+    //   str = "links.join("</div><div class='col-md-2'>")";
+    //   $("#children").html(str);
+    // }
   }
 
   function getChild(id) {
@@ -713,10 +727,12 @@ function search(term) {
     var options = "", pics = "";
     gameCurrentAnswers.forEach(function(i){
       if (typeof gamePeople[i].details.fbid !== "undefined"){
-        pics += '<iframe id="facebookPic" style="position:relative; top:47px; margin-left:12px; margin-right:12px;" onclick="checkAnswer(' +
-          gamePeople[i].id + ')" class="pic" src="https://graph.facebook.com/' +
-        gamePeople[i].details.fbid +
-        '/picture?type=normal"></iframe>'
+        pics += '<span onclick="checkAnswer(' + gamePeople[i].id + ')">';
+        pics += '<iframe id="facebookPic" class="pic" '+
+        'style="pointer-events: none; position:relative; top:47px; margin-left:12px; margin-right:12px;" '+
+        ' src="https://graph.facebook.com/' + gamePeople[i].details.fbid + '/picture?type=normal"></iframe>';
+        pics += '</span>';
+
       }else{
       pics += '<image style="margin: 0px 20px" class="pic" onclick="checkAnswer(' +
         gamePeople[i].id + ')" src="/pic?path=' + gamePeople[i].details.pic +'"></image>'
